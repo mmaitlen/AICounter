@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:signals_flutter/signals_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 // Create a signal for the counter
 final counter = signal(0);
@@ -8,7 +9,18 @@ final step = signal(1);
 // Create a global key for the Scaffold
 final scaffoldKey = GlobalKey<ScaffoldState>();
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final prefs = await SharedPreferences.getInstance();
+  counter.value = prefs.getInt('counter') ?? 0;
+  step.value = prefs.getInt('step') ?? 1;
+
+  // Save the counter and step values whenever they change
+  effect(() {
+    prefs.setInt('counter', counter.value);
+    prefs.setInt('step', step.value);
+  });
+
   runApp(const MyApp());
 }
 
