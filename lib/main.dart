@@ -3,6 +3,8 @@ import 'package:signals_flutter/signals_flutter.dart';
 
 // Create a signal for the counter
 final counter = signal(0);
+// Create a signal for the step amount
+final step = signal(1);
 
 void main() {
   runApp(const MyApp());
@@ -50,6 +52,19 @@ class MyHomePage extends StatelessWidget {
                 style: Theme.of(context).textTheme.headlineMedium,
               );
             }),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 32.0),
+              child: TextField(
+                keyboardType: TextInputType.number,
+                decoration: const InputDecoration(labelText: 'Step'),
+                onChanged: (value) {
+                  final parsedValue = int.tryParse(value);
+                  if (parsedValue != null) {
+                    step.value = parsedValue;
+                  }
+                },
+              ),
+            ),
           ],
         ),
       ),
@@ -57,13 +72,13 @@ class MyHomePage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           FloatingActionButton(
-            onPressed: () => counter.value++,
+            onPressed: () => counter.value += step.value,
             tooltip: 'Increment',
             child: const Icon(Icons.add),
           ),
           const SizedBox(height: 10),
           FloatingActionButton(
-            onPressed: () => counter.value--,
+            onPressed: () => counter.value -= step.value,
             tooltip: 'Decrement',
             child: const Icon(Icons.remove),
           ),
