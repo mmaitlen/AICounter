@@ -5,6 +5,8 @@ import 'package:signals_flutter/signals_flutter.dart';
 final counter = signal(0);
 // Create a signal for the step amount
 final step = signal(1);
+// Create a global key for the Scaffold
+final scaffoldKey = GlobalKey<ScaffoldState>();
 
 void main() {
   runApp(const MyApp());
@@ -34,6 +36,7 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: scaffoldKey,
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(title),
