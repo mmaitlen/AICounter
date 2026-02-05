@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:aicounter/main.dart';
+import 'package:aicounter/core/dependency_injection.dart' as di;
+import 'package:aicounter/features/counter/presentation/signals/counter_signals.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   setUp(() async {
     SharedPreferences.setMockInitialValues({});
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.clear();
+    await di.sl.reset(); // Reset GetIt before initializing
+    await di.init(); // Initialize GetIt with fresh mocks
     counter.value = 0;
     step.value = 1;
   });
@@ -23,7 +25,7 @@ void main() {
 
     // Tap the '+' icon and trigger a frame.
     await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+    await tester.pumpAndSettle();
 
     // Verify that our counter has incremented.
     expect(find.text('0'), findsNothing);
@@ -41,7 +43,7 @@ void main() {
 
     // Tap the '-' icon and trigger a frame.
     await tester.tap(find.byIcon(Icons.remove));
-    await tester.pump();
+    await tester.pumpAndSettle();
 
     // Verify that our counter has decremented.
     expect(find.text('0'), findsNothing);
@@ -72,14 +74,14 @@ void main() {
 
     // Tap the '+' icon and trigger a frame.
     await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+    await tester.pumpAndSettle();
 
     // Verify that our counter has incremented by 5.
     expect(find.text('5'), findsOneWidget);
 
     // Tap the '-' icon and trigger a frame.
     await tester.tap(find.byIcon(Icons.remove));
-    await tester.pump();
+    await tester.pumpAndSettle();
 
     // Verify that our counter has decremented by 5.
     expect(find.text('0'), findsOneWidget);
