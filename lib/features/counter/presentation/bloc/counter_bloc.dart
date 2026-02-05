@@ -44,26 +44,23 @@ class CounterBloc extends Bloc<CounterEvent, CounterState> {
     CounterIncremented event,
     Emitter<CounterState> emit,
   ) async {
-    emit(state.copyWith(status: CounterStatus.loading));
-    try {
-      await incrementCounter(state.step);
-      final counter = await getCounter();
-      emit(state.copyWith(
-        status: CounterStatus.success,
-        counter: counter.value,
-      ));
-    } catch (_) {
-      emit(state.copyWith(status: CounterStatus.failure));
-    }
+    await _onCounterChanged(emit, () => incrementCounter(state.step));
   }
 
   Future<void> _onCounterDecremented(
     CounterDecremented event,
     Emitter<CounterState> emit,
   ) async {
+    await _onCounterChanged(emit, () => decrementCounter(state.step));
+  }
+
+  Future<void> _onCounterChanged(
+    Emitter<CounterState> emit,
+    Future<void> Function() action,
+  ) async {
     emit(state.copyWith(status: CounterStatus.loading));
     try {
-      await decrementCounter(state.step);
+      await action();
       final counter = await getCounter();
       emit(state.copyWith(
         status: CounterStatus.success,
