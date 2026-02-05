@@ -6,26 +6,36 @@ import 'package:aicounter/features/counter/domain/repositories/counter_repositor
 import 'package:aicounter/features/counter/domain/usecases/decrement_counter.dart';
 import 'package:aicounter/features/counter/domain/usecases/increment_counter.dart';
 import 'package:aicounter/features/counter/domain/usecases/get_counter.dart';
+import 'package:aicounter/features/counter/presentation/bloc/counter_bloc.dart';
 
 final sl = GetIt.instance;
 
 Future<void> init() async {
-  // External
-  final sharedPreferences = await SharedPreferences.getInstance();
-  sl.registerLazySingleton(() => sharedPreferences);
-
-  // Datasources
-  sl.registerLazySingleton<CounterLocalDataSource>(
-    () => CounterLocalDataSourceImpl(sharedPreferences: sl()),
-  );
-
-  // Repositories
-  sl.registerLazySingleton<CounterRepository>(
-    () => CounterRepositoryImpl(localDataSource: sl()),
+  // BLoC
+  sl.registerFactory(
+    () => CounterBloc(
+      getCounter: sl(),
+      incrementCounter: sl(),
+      decrementCounter: sl(),
+    ),
   );
 
   // Usecases
   sl.registerLazySingleton(() => GetCounter(sl()));
   sl.registerLazySingleton(() => IncrementCounter(sl()));
   sl.registerLazySingleton(() => DecrementCounter(sl()));
+
+  // Repositories
+  sl.registerLazySingleton<CounterRepository>(
+    () => CounterRepositoryImpl(localDataSource: sl()),
+  );
+
+  // Datasources
+  sl.registerLazySingleton<CounterLocalDataSource>(
+    () => CounterLocalDataSourceImpl(sharedPreferences: sl()),
+  );
+
+  // External
+  final sharedPreferences = await SharedPreferences.getInstance();
+  sl.registerLazySingleton(() => sharedPreferences);
 }

@@ -1,6 +1,6 @@
 # AICounter
 
-A simple Flutter counter application that demonstrates basic increment/decrement functionality with customizable step values, utilizing the `signals` package for state management.
+A simple Flutter counter application that demonstrates basic increment/decrement functionality with customizable step values, utilizing the `bloc` and `flutter_bloc` packages for state management.
 
 ## Functionality
 
@@ -9,7 +9,7 @@ The application provides the following features:
 *   **Counter Display:** Shows the current value of the counter.
 *   **Increment/Decrement:** Buttons to increase and decrease the counter's value.
 *   **Custom Step Value:** A slide-in menu (drawer) allows the user to define a custom step amount by which the counter increments or decrements.
-*   **State Management with Signals:** The application uses the `signals` package to efficiently manage and react to changes in the counter and step values.
+*   **State Management with BLoC:** The application uses the `bloc` and `flutter_bloc` packages to manage the application's state in a predictable and testable way, following the MVVM architecture principles.
 
 ## Target Platforms
 
@@ -71,8 +71,8 @@ The project follows a Clean Architecture approach to ensure separation of concer
         *   `repositories`: Abstract definitions of data contracts (`CounterRepository`).
         *   `usecases`: Business logic operations (`IncrementCounter`, `DecrementCounter`, `GetCounter`).
     *   **`presentation`**:
+        *   `bloc`: UI-specific state management using the `bloc` package.
         *   `pages`: UI screens (`CounterPage`).
-        *   `signals`: UI-specific state management using the `signals` package.
         *   `widgets`: Reusable UI components.
 
 ## Testing

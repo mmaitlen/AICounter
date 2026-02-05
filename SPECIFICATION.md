@@ -10,7 +10,7 @@ AICounter
 
 ### 1.2. Description
 
-A simple counter application that demonstrates the use of the `signals` package for state management.
+A simple counter application that demonstrates the use of the `bloc` and `flutter_bloc` packages for state management.
 
 ### 1.3. Core Functionality
 
@@ -20,7 +20,7 @@ A simple counter application that demonstrates the use of the `signals` package 
 
 ### 1.4. State Management
 
-*   Use the `signals` package for state management.
+*   Use the `bloc` and `flutter_bloc` packages for state management, following a MVVM architecture.
 
 ### 1.5. User Interface
 
@@ -54,14 +54,14 @@ A simple counter application that demonstrates the use of the `signals` package 
     ```
 3.  **Add Dependencies:**
     ```bash
-    flutter pub add signals
+    flutter pub add bloc flutter_bloc
     ```
 
 ### 2.2. Initial Implementation
 
 1.  **Replace `lib/main.dart` with the initial UI:**
     *   The initial UI should contain a counter display and two floating action buttons for increment and decrement.
-    *   Use the `signals` package to manage the counter state.
+    *   Use the `bloc` and `flutter_bloc` packages to manage the counter state.
 
 2.  **Commit the initial version:**
     ```bash
@@ -73,7 +73,7 @@ A simple counter application that demonstrates the use of the `signals` package 
 
 1.  **Add a `TextField`:**
     *   Add a `TextField` to the UI to allow the user to input the step amount.
-    *   Create a new signal to hold the step value.
+    *   Update the `CounterBloc` to handle the step value.
     *   Update the increment and decrement logic to use the step value.
 
 2.  **Commit the "step" feature:**
@@ -99,7 +99,7 @@ A simple counter application that demonstrates the use of the `signals` package 
     *   Create `test/widget_test.dart`.
 2.  **Write widget tests:**
     *   Write tests for the increment, decrement, and step change functionality.
-    *   Use the `flutter_test` package.
+    *   Use the `flutter_test` and `bloc_test` packages.
 
 3.  **Commit the tests:**
     ```bash
