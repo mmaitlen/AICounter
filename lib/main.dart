@@ -37,6 +37,44 @@ class MyHomePage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(title),
+        leading: Builder(
+          builder: (BuildContext context) {
+            return IconButton(
+              icon: const Icon(Icons.menu),
+              onPressed: () {
+                Scaffold.of(context).openDrawer();
+              },
+              tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+            );
+          },
+        ),
+      ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            DrawerHeader(
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.inversePrimary,
+              ),
+              child: const Text('Settings'),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: TextField(
+                keyboardType: TextInputType.number,
+                decoration: const InputDecoration(labelText: 'Step'),
+                onChanged: (value) {
+                  final parsedValue = int.tryParse(value);
+                  if (parsedValue != null) {
+                    step.value = parsedValue;
+                  }
+                },
+                controller: TextEditingController(text: step.value.toString()), // Initialize with current step value
+              ),
+            ),
+          ],
+        ),
       ),
       body: Center(
         child: Column(
@@ -52,19 +90,6 @@ class MyHomePage extends StatelessWidget {
                 style: Theme.of(context).textTheme.headlineMedium,
               );
             }),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 32.0),
-              child: TextField(
-                keyboardType: TextInputType.number,
-                decoration: const InputDecoration(labelText: 'Step'),
-                onChanged: (value) {
-                  final parsedValue = int.tryParse(value);
-                  if (parsedValue != null) {
-                    step.value = parsedValue;
-                  }
-                },
-              ),
-            ),
           ],
         ),
       ),
