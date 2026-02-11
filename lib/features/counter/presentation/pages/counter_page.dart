@@ -80,13 +80,15 @@ class CounterView extends StatelessWidget {
             const Text(
               'You have pushed the button this many times:',
             ),
-            BlocBuilder<CounterBloc, CounterState>(
-              builder: (context, state) {
-                if (state.status == CounterStatus.loading) {
+            BlocSelector<CounterBloc, CounterState, int>(
+              selector: (state) => state.counter,
+              builder: (context, counter) {
+                final status = context.select((CounterBloc bloc) => bloc.state.status);
+                if (status == CounterStatus.loading) {
                   return const CircularProgressIndicator();
                 }
                 return Text(
-                  '${state.counter}',
+                  '$counter',
                   style: Theme.of(context).textTheme.headlineMedium,
                 );
               },
