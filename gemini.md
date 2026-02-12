@@ -32,4 +32,4 @@ Always ensure the feature branch is pushed to the remote repository before attem
 
 ## Agent Memories
 - The user wants all future commits to be made by 'GeminiAgent-BobDog'.
-- The user wants to be reminded to approve PRs before they are merged.
+- Always check on GitHub that a branch has a PR that has been Approved before merging the branch into the default main branch
