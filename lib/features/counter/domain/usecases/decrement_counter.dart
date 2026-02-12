@@ -4,7 +4,7 @@ import 'package:aicounter/features/counter/domain/repositories/counter_repositor
 class DecrementCounter {
   final CounterRepository repository;
 
-  DecrementCounter(this.repository);
+  const DecrementCounter(this.repository);
 
   Future<void> call(int step) async {
     final currentCounter = await repository.getCounter();

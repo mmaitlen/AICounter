@@ -12,23 +12,19 @@ import 'package:mocktail/mocktail.dart';
 class MockStore extends Mock implements CounterLocalDataSource {}
 
 void main() {
-  late MockStore mockStore;
-  late CounterRepositoryImpl repo;
-  late GetCounter fetchCount;
-  late IncrementCounter incCount;
-  late DecrementCounter decCount;
-  late CounterBloc bloc;
-
   group('CounterBloc Tests', () {
+    final mockStore = MockStore();
+    final repo = CounterRepositoryImpl(localDataSource: mockStore);
+    final fetchCount = GetCounter(repo);
+    final incCount = IncrementCounter(repo);
+    final decCount = DecrementCounter(repo);
+    final bloc = CounterBloc(
+      getCounter: fetchCount,
+      incrementCounter: incCount,
+      decrementCounter: decCount,
+    );
 
-    mockStore = MockStore();
-    repo = CounterRepositoryImpl(localDataSource: mockStore);
-    fetchCount = GetCounter(repo);
-    incCount = IncrementCounter(repo);
-    decCount = DecrementCounter(repo);
-    bloc = CounterBloc(getCounter: fetchCount, incrementCounter: incCount, decrementCounter: decCount);
-
-    when(() => mockStore.getCounter()).thenAnswer((_) async =>  Counter(5));
+    when(() => mockStore.getCounter()).thenAnswer((_) async => Counter(5));
 
     blocTest<CounterBloc, CounterState>(
       'emits [Loading, Loaded] when LoadDataEvent is added',

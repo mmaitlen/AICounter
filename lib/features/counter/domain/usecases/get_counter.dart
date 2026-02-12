@@ -4,7 +4,7 @@ import 'package:aicounter/features/counter/domain/repositories/counter_repositor
 class GetCounter {
   final CounterRepository repository;
 
-  GetCounter(this.repository);
+  const GetCounter(this.repository);
 
   Future<Counter> call() async {
     return await repository.getCounter();

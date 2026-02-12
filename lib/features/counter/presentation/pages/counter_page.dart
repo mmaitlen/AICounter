@@ -60,12 +60,14 @@ class CounterView extends StatelessWidget {
                     onChanged: (value) {
                       final parsedValue = int.tryParse(value);
                       if (parsedValue != null) {
-                        context
-                            .read<CounterBloc>()
-                            .add(CounterStepChanged(parsedValue));
+                        context.read<CounterBloc>().add(
+                          CounterStepChanged(parsedValue),
+                        );
                       }
                     },
-                    controller: TextEditingController(text: state.step.toString()),
+                    controller: TextEditingController(
+                      text: state.step.toString(),
+                    ),
                   );
                 },
               ),
@@ -77,13 +79,16 @@ class CounterView extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: const Text('Counter value is:'),
             ),
             BlocSelector<CounterBloc, CounterState, int>(
               selector: (state) => state.counter,
               builder: (context, counter) {
-                final status = context.select((CounterBloc bloc) => bloc.state.status);
+                final status = context.select(
+                  (CounterBloc bloc) => bloc.state.status,
+                );
                 if (status == CounterStatus.loading) {
                   return const CircularProgressIndicator();
                 }
