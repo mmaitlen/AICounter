@@ -92,9 +92,22 @@ class CounterView extends StatelessWidget {
                 if (status == CounterStatus.loading) {
                   return const CircularProgressIndicator();
                 }
-                return Text(
-                  '$counter',
-                  style: Theme.of(context).textTheme.headlineMedium,
+                String message;
+                if (counter == 0) {
+                  message = 'Hello, World! The counter is...';
+                } else if (counter > 0) {
+                  message = 'Great going! The counter is...';
+                } else {
+                  message = 'Hang in there! The counter is...';
+                }
+                return Column(
+                  children: [
+                    Text(message),
+                    Text(
+                      '$counter',
+                      style: Theme.of(context).textTheme.headlineMedium,
+                    ),
+                  ],
                 );
               },
             ),
