@@ -52,8 +52,9 @@ class CounterView extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.all(16.0),
-              child: BlocBuilder<CounterBloc, CounterState>(
-                builder: (context, state) {
+              child: BlocSelector<CounterBloc, CounterState, int>(
+                selector: (state) => state.step,
+                builder: (context, step) {
                   return TextField(
                     keyboardType: TextInputType.number,
                     decoration: const InputDecoration(labelText: 'Step'),
@@ -65,9 +66,7 @@ class CounterView extends StatelessWidget {
                         );
                       }
                     },
-                    controller: TextEditingController(
-                      text: state.step.toString(),
-                    ),
+                    controller: TextEditingController(text: step.toString()),
                   );
                 },
               ),
@@ -79,19 +78,12 @@ class CounterView extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: const Text('Counter value is:'),
-            ),
-            BlocSelector<CounterBloc, CounterState, int>(
-              selector: (state) => state.counter,
-              builder: (context, counter) {
-                final status = context.select(
-                  (CounterBloc bloc) => bloc.state.status,
-                );
-                if (status == CounterStatus.loading) {
+            BlocBuilder<CounterBloc, CounterState>(
+              builder: (context, state) {
+                if (state.status == CounterStatus.loading) {
                   return const CircularProgressIndicator();
                 }
+                final counter = state.counter;
                 String message;
                 if (counter == 0) {
                   message = 'Hello, World! The counter is...';

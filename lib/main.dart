@@ -5,11 +5,11 @@ import 'package:aicounter/core/dependency_injection.dart' as di;
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await di.init();
-  runApp(const MyApp());
+  runApp(const CounterApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class CounterApp extends StatelessWidget {
+  const CounterApp({super.key});
 
   @override
   Widget build(BuildContext context) {
