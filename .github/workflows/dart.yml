@@ -7,7 +7,7 @@ name: Dart
 
 on:
   push:
-    branches: [ "main", "dev/ensure_tests_run" ]
+    branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
 
