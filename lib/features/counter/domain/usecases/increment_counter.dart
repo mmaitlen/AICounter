@@ -8,7 +8,7 @@ class IncrementCounter {
 
   Future<void> call(int step) async {
     final currentCounter = await repository.getCounter();
-    final newCounter = Counter(currentCounter.value + step + 2);
+    final newCounter = Counter(currentCounter.value + step);
     await repository.setCounter(newCounter);
   }
 }

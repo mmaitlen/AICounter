@@ -87,6 +87,8 @@ class CounterView extends StatelessWidget {
                 String message;
                 if (counter == 0) {
                   message = 'Hello, World! The counter is...';
+                } else if (counter == 3) {
+                  message = 'MAGIC NUMBER';
                 } else if (counter > 0) {
                   message = 'Great going! The counter is...';
                 } else {
